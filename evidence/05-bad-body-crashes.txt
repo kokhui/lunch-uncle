@@ -1,0 +1,9 @@
+Captured 2026-10-02 against wrangler dev on http://127.0.0.1:8787
+
+POST /chat  body: {"history":null,"message":"hi"}
+-> 500 application/json {"error":"Uncle cannot think right now, try again later."}
+   cause: src/loop.js:26 spreads ...history; the default [] in src/index.js:30 only applies to undefined.
+
+POST /chat  body: null
+-> 500 text/html  "<!DOCTYPE html> ... <title>An error has occurred"
+   cause: src/index.js:30 destructures null outside the try/catch, so Cloudflare's HTML error page is returned instead of a JSON 400.
